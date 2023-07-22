@@ -4,10 +4,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db   ##means from __init__.py import db
 from flask_login import login_user, login_required, logout_user, current_user
 
-
 auth = Blueprint('auth', __name__)
 
-
+# Login route for Influencer
 @auth.route('/loginI', methods=['GET', 'POST'])
 def login_i():
     if request.method == 'POST':
@@ -27,6 +26,7 @@ def login_i():
 
     return render_template("login.html", user=current_user)
 
+# Login route for Business
 @auth.route('/loginB', methods=['GET', 'POST'])
 def login_b():
     if request.method == 'POST':
@@ -46,14 +46,14 @@ def login_b():
 
     return render_template("login.html", user=current_user)
 
-
+# Logout route
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('views.home'))
 
-
+# Sign up route for Influencer
 @auth.route('/signupi', methods=['GET', 'POST'])
 def sign_up_i():
     if request.method == 'POST':
@@ -84,6 +84,7 @@ def sign_up_i():
 
     return render_template("signupi.html", user=current_user)
 
+# Sign up route for Business
 @auth.route('/signupb', methods=['GET', 'POST'])
 def sign_up_b():
     if request.method == 'POST':
