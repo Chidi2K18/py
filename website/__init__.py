@@ -19,18 +19,21 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import User, Note
+    from .models import Influencer, Business
     
     with app.app_context():
         db.create_all()
 
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'auth.login_i'
     login_manager.init_app(app)
 
     @login_manager.user_loader
-    def load_user(id):
-        return User.query.get(int(id))
+    def load_Influencer(id):
+        return Influencer.query.get(int(id))
+    @login_manager.user_loader
+    def load_Business(id):
+        return Business.query.get(int(id))
 
     return app
 
